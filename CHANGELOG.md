@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.1] - 2026-07-16
+
 ### Added
 
 - `updee` CLI which finds dependency files (`package-lock.json`, `package.json`,

@@ -46,7 +46,8 @@ The first step to identify what is necessary should be to run the tests and see 
 - Discovery of upgradeable files (package.json, pyproject.toml, etc.) is in `src/upd/find.py`.
 - Upgrading of the discovered files (running commands like `uv lock --upgrade`) is in `src/upd/upgrade.py`.
 - Unit tests are in `tests/unit`.
-- The version is derived from git tags via setuptools-scm - there is no version constant in the source code.
+- Shell tests are in `tests/shell`.
+- The version is derived from git tags via setuptools-scm - there is no version constant in the source code. `src/upd/version.py` reads it from the installed package metadata.
 
 ## Reference project
 

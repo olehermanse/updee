@@ -23,6 +23,21 @@ def test_main_upgrades_found_files(tmp_path, capsys, monkeypatch):
     assert calls[0][0] == ["uv", "lock", "--upgrade"]
 
 
+def test_main_propagates_upgrade_failure(tmp_path, capsys, monkeypatch):
+    (tmp_path / "pyproject.toml").touch()
+    monkeypatch.chdir(tmp_path)
+
+    def fake_run(command, cwd):
+        class Result:
+            returncode = 2
+
+        return Result()
+
+    monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
+
+    assert main() == 1
+
+
 def test_main_skips_unsupported_files(tmp_path, capsys, monkeypatch):
     (tmp_path / "package.json").touch()
     monkeypatch.chdir(tmp_path)

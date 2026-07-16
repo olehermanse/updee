@@ -28,9 +28,17 @@ venv = ".venv"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--cov=upd --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = ["src/upd/__main__.py"]
+
+[tool.coverage.report]
+exclude_also = ['if __name__ == "__main__":']
 
 [dependency-groups]
 dev = [
     "flake8>=7.1.2",
     "pytest>=8.3.4",
+    "pytest-cov>=7.1.0",
 ]

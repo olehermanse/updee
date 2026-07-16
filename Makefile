@@ -20,3 +20,4 @@ install:
 
 check: venv format lint
 	uv run pytest
+	uv run bash tests/run-shell-tests.sh

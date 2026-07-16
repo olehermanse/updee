@@ -29,6 +29,11 @@ To run only the unit tests:
 uv run pytest
 ```
 
+## Test suites
+
+- Unit tests in `tests/unit` test individual python functions.
+- Shell tests in `tests/shell` test the tool as a whole in an end-to-end fashion - each script sets up a fake "repo" under `out/shell-tests/` and checks that `upd` upgrades it. They require network access. Since new upstream releases happen at any time, they check that files were changed and remain valid, never exact post-upgrade versions.
+
 ## Fix the implementation
 
 In general, when the prompter asks you to fix the implementation, this means that they have adjusted the tests already and they want you to fix the implementation.

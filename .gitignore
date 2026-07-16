@@ -219,3 +219,6 @@ __marimo__/
 
 # Local scratch space (reference repos, etc.)
 /tmp/
+
+# Shell test sandboxes
+/out/

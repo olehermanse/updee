@@ -12,10 +12,6 @@ Things we're planning on adding, in no particular order:
 - GitHub Actions workflows (`.github/workflows/*.yml`): bump `uses:` action versions to the latest tag.
 - `Dockerfile`: bump the image tags in `FROM` lines to the latest version, e.g. `python:3.13-slim` -> `python:3.14-slim`.
 
-## CLI
-
-- `--quiet` flag: only print the summary, hide subcommand output.
-
 ## Automation
 
 - `--commit` flag: commit each upgraded file separately, with a commit message describing the upgrade.

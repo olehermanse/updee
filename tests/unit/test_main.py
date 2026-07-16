@@ -10,7 +10,7 @@ def test_main_upgrades_found_files(tmp_path, capsys, monkeypatch):
 
     calls = []
 
-    def fake_run(command, cwd):
+    def fake_run(command, cwd, stdout=None, stderr=None):
         calls.append((command, cwd))
 
         class Result:
@@ -29,7 +29,7 @@ def test_main_propagates_upgrade_failure(tmp_path, capsys, monkeypatch):
     (tmp_path / "pyproject.toml").touch()
     monkeypatch.chdir(tmp_path)
 
-    def fake_run(command, cwd):
+    def fake_run(command, cwd, stdout=None, stderr=None):
         class Result:
             returncode = 2
 
@@ -145,13 +145,25 @@ def test_main_dry_run(tmp_path, capsys, monkeypatch):
     (tmp_path / "pyproject.toml").touch()
     monkeypatch.chdir(tmp_path)
 
-    def fake_run(command, cwd):
+    def fake_run(command, cwd, stdout=None, stderr=None):
         raise AssertionError("subprocess.run should not be called in dry run")
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
     assert main(["--dry-run"]) == 0
     assert "would run" in capsys.readouterr().out
+
+
+def test_main_quiet(tmp_path, capsys, monkeypatch):
+    (tmp_path / "package.json").touch()
+    (tmp_path / "requirements.txt").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["--dry-run", "--quiet"]) == 0
+    lines = capsys.readouterr().out.splitlines()
+    # Only the summary, nothing before it:
+    assert lines[0] == "Summary:"
+    assert len(lines) == 3
 
 
 def test_main_version(capsys):

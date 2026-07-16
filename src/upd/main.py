@@ -27,6 +27,12 @@ def _get_arg_parser():
         action="store_true",
     )
     ap.add_argument(
+        "--quiet",
+        "-q",
+        help="Only print the summary, hiding progress and subcommand output",
+        action="store_true",
+    )
+    ap.add_argument(
         "--only",
         help="Comma-separated list of file names to upgrade, "
         "e.g. 'pyproject.toml,requirements.txt' (default: all supported files)",
@@ -69,7 +75,9 @@ def main(argv=None) -> int:
         return 1
     results = []
     for file in files:
-        results.append((file, upgrade_file(file, dry_run=args.dry_run)))
+        results.append(
+            (file, upgrade_file(file, dry_run=args.dry_run, quiet=args.quiet))
+        )
     width = max(len(str(file)) for file, _ in results)
     print("Summary:")
     for file, status in results:

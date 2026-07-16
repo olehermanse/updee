@@ -26,3 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   e.g. `--only pyproject.toml,requirements.txt`.
 - Summary table at the end of each run, with one line per file:
   upgraded / skipped / failed / would upgrade.
+- `--quiet` / `-q` flag, to only print the summary, hiding progress and
+  subcommand output.

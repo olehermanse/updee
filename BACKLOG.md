@@ -14,7 +14,6 @@ Things we're planning on adding, in no particular order:
 
 ## CLI
 
-- `--dry-run` flag: print the files that would be upgraded and the commands that would be run, without running them.
 - Positional `paths` arguments: `upd some/dir file.txt` to upgrade only the given files / directories, defaulting to the current directory.
 - `--only` flag to filter by file type: `upd --only pyproject.toml,requirements.txt`.
 - Summary table at the end of a run: one line per file with upgraded / skipped / failed.

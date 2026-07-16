@@ -94,6 +94,17 @@ def test_missing_uv_is_an_error(tmp_path, monkeypatch, capsys):
     assert "'uv' not found" in capsys.readouterr().out
 
 
+def test_dry_run_does_not_run_anything(tmp_path, monkeypatch, capsys):
+    def fake_run(command, cwd):
+        raise AssertionError("subprocess.run should not be called in dry run")
+
+    monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
+
+    assert upgrade_file(tmp_path / "pyproject.toml", dry_run=True) == 0
+    output = capsys.readouterr().out
+    assert "would run 'uv lock --upgrade'" in output
+
+
 def test_unsupported_file_is_skipped(capsys):
     assert upgrade_file(Path("package.json")) == 0
     captured = capsys.readouterr()

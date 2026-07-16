@@ -18,3 +18,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `--version` / `-V` and `--help` / `-h` flags.
 - Dockerfile for running upd in a repo / folder mounted at `/repo`, with all
   the CLIs upd relies on preinstalled.
+- `--dry-run` flag, printing the files that would be upgraded and the commands
+  that would be run, without running them.

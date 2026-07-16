@@ -20,18 +20,24 @@ def _get_arg_parser():
         action="version",
         version=version_string(),
     )
+    ap.add_argument(
+        "--dry-run",
+        help="Print the files that would be upgraded and the commands "
+        "that would be run, without running them",
+        action="store_true",
+    )
     return ap
 
 
 def main(argv=None) -> int:
-    _get_arg_parser().parse_args(argv)
+    args = _get_arg_parser().parse_args(argv)
     files = find_upgrade_files(Path("."))
     if not files:
         print("No files to upgrade found")
         return 1
     exit_code = 0
     for file in files:
-        if upgrade_file(file) != 0:
+        if upgrade_file(file, dry_run=args.dry_run) != 0:
             exit_code = 1
     return exit_code
 

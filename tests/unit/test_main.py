@@ -56,6 +56,19 @@ def test_main_with_no_upgrade_files(tmp_path, capsys, monkeypatch):
     assert captured.out == "No files to upgrade found\n"
 
 
+def test_main_dry_run(tmp_path, capsys, monkeypatch):
+    (tmp_path / "pyproject.toml").touch()
+    monkeypatch.chdir(tmp_path)
+
+    def fake_run(command, cwd):
+        raise AssertionError("subprocess.run should not be called in dry run")
+
+    monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
+
+    assert main(["--dry-run"]) == 0
+    assert "would run" in capsys.readouterr().out
+
+
 def test_main_version(capsys):
     with pytest.raises(SystemExit) as excinfo:
         main(["--version"])

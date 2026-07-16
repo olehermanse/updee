@@ -28,3 +28,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   upgraded / skipped / failed / would upgrade.
 - `--quiet` / `-q` flag, to only print the summary, hiding progress and
   subcommand output.
+- GitHub Actions workflow running `make check` on pushes and pull requests,
+  on Linux and macOS, python 3.10 - 3.14.

@@ -56,6 +56,47 @@ def test_main_with_no_upgrade_files(tmp_path, capsys, monkeypatch):
     assert captured.out == "No files to upgrade found\n"
 
 
+def test_main_path_to_directory(tmp_path, capsys, monkeypatch):
+    (tmp_path / "one").mkdir()
+    (tmp_path / "one" / "package.json").touch()
+    (tmp_path / "two").mkdir()
+    (tmp_path / "two" / "package.json").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["one"]) == 0
+    output = capsys.readouterr().out
+    assert "one/package.json" in output
+    assert "two/package.json" not in output
+
+
+def test_main_path_to_file(tmp_path, capsys, monkeypatch):
+    (tmp_path / "package.json").touch()
+    (tmp_path / "requirements.txt").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["--dry-run", "package.json"]) == 0
+    output = capsys.readouterr().out
+    assert "package.json" in output
+    assert "requirements.txt" not in output
+
+
+def test_main_path_does_not_exist(tmp_path, capsys, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["missing"]) == 1
+    assert "is not a file or directory" in capsys.readouterr().out
+
+
+def test_main_duplicate_paths(tmp_path, capsys, monkeypatch):
+    (tmp_path / "package.json").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["package.json", "package.json", "."]) == 0
+    output = capsys.readouterr().out
+    # Deduplicated - mentioned once, not three times:
+    assert output.count("package.json") == 1
+
+
 def test_main_dry_run(tmp_path, capsys, monkeypatch):
     (tmp_path / "pyproject.toml").touch()
     monkeypatch.chdir(tmp_path)

@@ -20,3 +20,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the CLIs upd relies on preinstalled.
 - `--dry-run` flag, printing the files that would be upgraded and the commands
   that would be run, without running them.
+- Positional `paths` arguments, to upgrade only the given files / directories,
+  defaulting to the current directory.

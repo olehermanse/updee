@@ -11,7 +11,7 @@ def _get_arg_parser():
     ap = argparse.ArgumentParser(
         prog="upd",
         description="Stupidly simple repo updater - "
-        "finds dependency files in the current directory and upgrades them",
+        "finds dependency files and upgrades them",
     )
     ap.add_argument(
         "--version",
@@ -26,12 +26,29 @@ def _get_arg_parser():
         "that would be run, without running them",
         action="store_true",
     )
+    ap.add_argument(
+        "paths",
+        nargs="*",
+        default=["."],
+        help="Files / directories to look for upgrades in "
+        "(default: current directory)",
+    )
     return ap
 
 
 def main(argv=None) -> int:
     args = _get_arg_parser().parse_args(argv)
-    files = find_upgrade_files(Path("."))
+    files = []
+    for arg in args.paths:
+        path = Path(arg)
+        if path.is_dir():
+            files.extend(find_upgrade_files(path))
+        elif path.is_file():
+            files.append(path)
+        else:
+            print(f"Error: '{arg}' is not a file or directory")
+            return 1
+    files = list(dict.fromkeys(files))
     if not files:
         print("No files to upgrade found")
         return 1

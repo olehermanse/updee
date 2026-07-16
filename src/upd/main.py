@@ -67,11 +67,16 @@ def main(argv=None) -> int:
     if not files:
         print("No files to upgrade found")
         return 1
-    exit_code = 0
+    results = []
     for file in files:
-        if upgrade_file(file, dry_run=args.dry_run) != 0:
-            exit_code = 1
-    return exit_code
+        results.append((file, upgrade_file(file, dry_run=args.dry_run)))
+    width = max(len(str(file)) for file, _ in results)
+    print("Summary:")
+    for file, status in results:
+        print(f"  {str(file):<{width}}  {status}")
+    if any(status == "failed" for _, status in results):
+        return 1
+    return 0
 
 
 if __name__ == "__main__":

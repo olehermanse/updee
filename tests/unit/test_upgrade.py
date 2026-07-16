@@ -18,7 +18,7 @@ def test_pyproject_runs_uv_lock_upgrade(tmp_path, monkeypatch):
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
-    assert upgrade_file(tmp_path / "pyproject.toml") == 0
+    assert upgrade_file(tmp_path / "pyproject.toml") == "upgraded"
     assert calls == [(["uv", "lock", "--upgrade"], tmp_path)]
 
 
@@ -28,7 +28,7 @@ def test_pyproject_propagates_failure(tmp_path, monkeypatch):
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
-    assert upgrade_file(tmp_path / "pyproject.toml") == 2
+    assert upgrade_file(tmp_path / "pyproject.toml") == "failed"
 
 
 def test_requirements_txt_compiles_onto_itself(tmp_path, monkeypatch):
@@ -40,7 +40,7 @@ def test_requirements_txt_compiles_onto_itself(tmp_path, monkeypatch):
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
-    assert upgrade_file(tmp_path / "requirements.txt") == 0
+    assert upgrade_file(tmp_path / "requirements.txt") == "upgraded"
     assert calls == [
         (
             [
@@ -67,7 +67,7 @@ def test_requirements_txt_compiles_from_requirements_in(tmp_path, monkeypatch):
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
-    assert upgrade_file(tmp_path / "requirements.txt") == 0
+    assert upgrade_file(tmp_path / "requirements.txt") == "upgraded"
     assert calls == [
         (
             [
@@ -90,7 +90,7 @@ def test_missing_uv_is_an_error(tmp_path, monkeypatch, capsys):
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
-    assert upgrade_file(tmp_path / "pyproject.toml") == 1
+    assert upgrade_file(tmp_path / "pyproject.toml") == "failed"
     assert "'uv' not found" in capsys.readouterr().out
 
 
@@ -100,12 +100,12 @@ def test_dry_run_does_not_run_anything(tmp_path, monkeypatch, capsys):
 
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
-    assert upgrade_file(tmp_path / "pyproject.toml", dry_run=True) == 0
+    assert upgrade_file(tmp_path / "pyproject.toml", dry_run=True) == "would upgrade"
     output = capsys.readouterr().out
     assert "would run 'uv lock --upgrade'" in output
 
 
 def test_unsupported_file_is_skipped(capsys):
-    assert upgrade_file(Path("package.json")) == 0
+    assert upgrade_file(Path("package.json")) == "skipped"
     captured = capsys.readouterr()
     assert "skipping" in captured.out

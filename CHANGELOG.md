@@ -24,3 +24,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   defaulting to the current directory.
 - `--only` flag, to filter which file names to upgrade,
   e.g. `--only pyproject.toml,requirements.txt`.
+- Summary table at the end of each run, with one line per file:
+  upgraded / skipped / failed / would upgrade.

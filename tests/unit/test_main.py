@@ -38,6 +38,21 @@ def test_main_propagates_upgrade_failure(tmp_path, capsys, monkeypatch):
     monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
 
     assert main([]) == 1
+    output = capsys.readouterr().out
+    assert "pyproject.toml" in output
+    assert "failed" in output
+
+
+def test_main_prints_summary(tmp_path, capsys, monkeypatch):
+    (tmp_path / "package.json").touch()
+    (tmp_path / "requirements.txt").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["--dry-run"]) == 0
+    lines = capsys.readouterr().out.splitlines()
+    summary = lines[lines.index("Summary:") + 1 :]
+    assert any("package.json" in ln and "skipped" in ln for ln in summary)
+    assert any("requirements.txt" in ln and "would upgrade" in ln for ln in summary)
 
 
 def test_main_skips_unsupported_files(tmp_path, capsys, monkeypatch):
@@ -93,8 +108,8 @@ def test_main_duplicate_paths(tmp_path, capsys, monkeypatch):
 
     assert main(["package.json", "package.json", "."]) == 0
     output = capsys.readouterr().out
-    # Deduplicated - mentioned once, not three times:
-    assert output.count("package.json") == 1
+    # Deduplicated - one skip line and one summary line, not three of each:
+    assert output.count("package.json") == 2
 
 
 def test_main_only_filters_files(tmp_path, capsys, monkeypatch):

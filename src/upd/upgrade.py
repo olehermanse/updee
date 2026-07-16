@@ -22,19 +22,23 @@ PLANNERS = {
 }
 
 
-def upgrade_file(path: Path, dry_run: bool = False) -> int:
+def upgrade_file(path: Path, dry_run: bool = False) -> str:
+    """Upgrade path, returning a status for the summary:
+    upgraded / skipped / failed / would upgrade"""
     planner = PLANNERS.get(path.name)
     if planner is None:
         print(f"{path}: skipping (upgrading this file type is not implemented yet)")
-        return 0
+        return "skipped"
     command = planner(path)
     if dry_run:
         print(f"{path}: would run '{' '.join(command)}'")
-        return 0
+        return "would upgrade"
     print(f"{path}: running '{' '.join(command)}'")
     try:
         result = subprocess.run(command, cwd=path.parent)
     except FileNotFoundError:
         print(f"Error: '{command[0]}' not found - is it installed and in PATH?")
-        return 1
-    return result.returncode
+        return "failed"
+    if result.returncode != 0:
+        return "failed"
+    return "upgraded"

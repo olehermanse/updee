@@ -14,7 +14,6 @@ Things we're planning on adding, in no particular order:
 
 ## CLI
 
-- Summary table at the end of a run: one line per file with upgraded / skipped / failed.
 - `--quiet` flag: only print the summary, hide subcommand output.
 
 ## Automation

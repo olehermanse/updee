@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from upd.find import find_upgrade_files
+from upd.find import UPGRADE_FILE_NAMES, find_upgrade_files
 from upd.upgrade import upgrade_file
 from upd.version import version_string
 
@@ -27,6 +27,11 @@ def _get_arg_parser():
         action="store_true",
     )
     ap.add_argument(
+        "--only",
+        help="Comma-separated list of file names to upgrade, "
+        "e.g. 'pyproject.toml,requirements.txt' (default: all supported files)",
+    )
+    ap.add_argument(
         "paths",
         nargs="*",
         default=["."],
@@ -38,6 +43,14 @@ def _get_arg_parser():
 
 def main(argv=None) -> int:
     args = _get_arg_parser().parse_args(argv)
+    only = None
+    if args.only:
+        only = args.only.split(",")
+        unknown = [name for name in only if name not in UPGRADE_FILE_NAMES]
+        if unknown:
+            print(f"Error: unknown file name(s): {', '.join(unknown)}")
+            print(f"Supported file names: {', '.join(UPGRADE_FILE_NAMES)}")
+            return 1
     files = []
     for arg in args.paths:
         path = Path(arg)
@@ -49,6 +62,8 @@ def main(argv=None) -> int:
             print(f"Error: '{arg}' is not a file or directory")
             return 1
     files = list(dict.fromkeys(files))
+    if only is not None:
+        files = [f for f in files if f.name in only]
     if not files:
         print("No files to upgrade found")
         return 1

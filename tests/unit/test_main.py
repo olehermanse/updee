@@ -97,6 +97,35 @@ def test_main_duplicate_paths(tmp_path, capsys, monkeypatch):
     assert output.count("package.json") == 1
 
 
+def test_main_only_filters_files(tmp_path, capsys, monkeypatch):
+    (tmp_path / "package.json").touch()
+    (tmp_path / "requirements.txt").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["--dry-run", "--only", "requirements.txt"]) == 0
+    output = capsys.readouterr().out
+    assert "requirements.txt" in output
+    assert "package.json" not in output
+
+
+def test_main_only_with_unknown_name(tmp_path, capsys, monkeypatch):
+    (tmp_path / "requirements.txt").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["--only", "requirements.txt,foo.txt"]) == 1
+    output = capsys.readouterr().out
+    assert "unknown file name(s): foo.txt" in output
+    assert "Supported file names:" in output
+
+
+def test_main_only_matching_nothing(tmp_path, capsys, monkeypatch):
+    (tmp_path / "requirements.txt").touch()
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["--only", "pyproject.toml"]) == 1
+    assert "No files to upgrade found" in capsys.readouterr().out
+
+
 def test_main_dry_run(tmp_path, capsys, monkeypatch):
     (tmp_path / "pyproject.toml").touch()
     monkeypatch.chdir(tmp_path)

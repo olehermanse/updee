@@ -22,3 +22,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   that would be run, without running them.
 - Positional `paths` arguments, to upgrade only the given files / directories,
   defaulting to the current directory.
+- `--only` flag, to filter which file names to upgrade,
+  e.g. `--only pyproject.toml,requirements.txt`.

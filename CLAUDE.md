@@ -48,6 +48,7 @@ The first step to identify what is necessary should be to run the tests and see 
 - Unit tests are in `tests/unit`.
 - Shell tests are in `tests/shell`.
 - The version is derived from git tags via setuptools-scm - there is no version constant in the source code. `src/upd/version.py` reads it from the installed package metadata.
+- The `Dockerfile` builds an image for running upd in a repo / folder mounted at `/repo`. It must install every CLI that `src/upd/upgrade.py` shells out to (currently only uv) - update it when adding upgraders that need new tools.
 
 ## Reference project
 

@@ -6,7 +6,17 @@ A CLI for keeping repos up to date, similar in spirit to updatecli, dependabot, 
 
 **Note:** upd assumes you have the necessary programs installed (like npm, uv, etc.).
 If not, it will give you a helpful error message.
-We plan to add a dockerfile you can run which has all the tools installed as well.
+Alternatively, use the docker image, which has all the tools installed.
+
+## Docker
+
+The Dockerfile builds an image with upd and the CLIs it relies on (uv).
+Build it once, then run upd in any repo / folder by mounting it at `/repo`:
+
+```bash
+docker build -t upd .
+docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo" upd
+```
 
 ## Development
 

@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 from upd.find import find_upgrade_files
+from upd.upgrade import upgrade_file
 
 
 def main() -> int:
@@ -9,9 +10,11 @@ def main() -> int:
     if not files:
         print("No files to upgrade found")
         return 1
+    exit_code = 0
     for file in files:
-        print(file)
-    return 0
+        if upgrade_file(file) != 0:
+            exit_code = 1
+    return exit_code
 
 
 if __name__ == "__main__":

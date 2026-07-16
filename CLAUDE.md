@@ -39,6 +39,7 @@ The first step to identify what is necessary should be to run the tests and see 
 
 - The CLI entry point (`main()`) is in `src/upd/main.py`.
 - Discovery of upgradeable files (package.json, pyproject.toml, etc.) is in `src/upd/find.py`.
+- Upgrading of the discovered files (running commands like `uv lock --upgrade`) is in `src/upd/upgrade.py`.
 - Unit tests are in `tests/unit`.
 - The version is derived from git tags via setuptools-scm - there is no version constant in the source code.
 

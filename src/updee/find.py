@@ -6,6 +6,11 @@ UPGRADE_FILE_NAMES = (
     "package.json",
     "requirements.txt",
     "pyproject.toml",
+    "uv.lock",
+    "go.mod",
+    "Cargo.toml",
+    "Cargo.lock",
+    "Dockerfile",
 )
 
 SKIP_DIR_NAMES = (

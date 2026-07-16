@@ -14,6 +14,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   GitHub API. The pinned precision is kept (`v4` becomes `v5`, `v4.1.0` becomes
   `v5.0.2`), and SHA / branch pins are left alone. Requests are authenticated
   with the `GITHUB_TOKEN` environment variable, if set.
+- Upgrading of `package-lock.json`, by running `npm update`.
+- Upgrading of `package.json`, by running `npx npm-check-updates -u` followed
+  by `npm install`, to also bump the version ranges in the file.
+- Upgrading of `go.mod`, by running `go get -u ./...` followed by
+  `go mod tidy`.
+- Upgrading of `Cargo.toml` / `Cargo.lock`, by running `cargo update`
+  (`Cargo.toml` defers to `Cargo.lock` when both are present).
+- Upgrading of `uv.lock`, by running `uv lock --upgrade`. `pyproject.toml`
+  defers to `uv.lock` when both are present, and poetry-managed projects are
+  skipped with a clear message.
+- Upgrading of `Dockerfile` base images, replacing version tags in `FROM`
+  lines (e.g. `python:3.13-slim` becomes `python:3.14-slim`) with the latest
+  tag of the same shape from Docker Hub. Images outside Docker Hub, `latest`
+  tags, and digest pins are left alone.
+- npm, go, and cargo in the docker image, for the new upgraders.
+
+### Fixed
+
+- The docker image failed to build since the rename to updee, because the
+  Dockerfile still set the `SETUPTOOLS_SCM_PRETEND_VERSION_FOR_UPD` (not
+  `..._FOR_UPDEE`) environment variable.
 
 ## [0.0.1] - 2026-07-16
 

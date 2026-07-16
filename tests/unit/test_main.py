@@ -44,19 +44,19 @@ def test_main_propagates_upgrade_failure(tmp_path, capsys, monkeypatch):
 
 
 def test_main_prints_summary(tmp_path, capsys, monkeypatch):
-    (tmp_path / "package.json").touch()
+    (tmp_path / "pyproject.toml").write_text("[tool.poetry]\n")
     (tmp_path / "requirements.txt").touch()
     monkeypatch.chdir(tmp_path)
 
     assert main(["--dry-run"]) == 0
     lines = capsys.readouterr().out.splitlines()
     summary = lines[lines.index("Summary:") + 1 :]
-    assert any("package.json" in ln and "skipped" in ln for ln in summary)
+    assert any("pyproject.toml" in ln and "skipped" in ln for ln in summary)
     assert any("requirements.txt" in ln and "would upgrade" in ln for ln in summary)
 
 
-def test_main_skips_unsupported_files(tmp_path, capsys, monkeypatch):
-    (tmp_path / "package.json").touch()
+def test_main_skips_poetry_files(tmp_path, capsys, monkeypatch):
+    (tmp_path / "pyproject.toml").write_text("[tool.poetry]\n")
     monkeypatch.chdir(tmp_path)
 
     assert main([]) == 0
@@ -78,7 +78,7 @@ def test_main_path_to_directory(tmp_path, capsys, monkeypatch):
     (tmp_path / "two" / "package.json").touch()
     monkeypatch.chdir(tmp_path)
 
-    assert main(["one"]) == 0
+    assert main(["--dry-run", "one"]) == 0
     output = capsys.readouterr().out
     assert "one/package.json" in output
     assert "two/package.json" not in output
@@ -106,9 +106,9 @@ def test_main_duplicate_paths(tmp_path, capsys, monkeypatch):
     (tmp_path / "package.json").touch()
     monkeypatch.chdir(tmp_path)
 
-    assert main(["package.json", "package.json", "."]) == 0
+    assert main(["--dry-run", "package.json", "package.json", "."]) == 0
     output = capsys.readouterr().out
-    # Deduplicated - one skip line and one summary line, not three of each:
+    # Deduplicated - one progress line and one summary line, not three of each:
     assert output.count("package.json") == 2
 
 

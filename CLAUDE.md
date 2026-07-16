@@ -51,10 +51,11 @@ When making user-visible changes, add an entry under the `[Unreleased]` heading,
 - Discovery of upgradeable files (package.json, pyproject.toml, etc.) is in `src/updee/find.py`.
 - Upgrading of the discovered files (running commands like `uv lock --upgrade`) is in `src/updee/upgrade.py`.
 - Upgrading of GitHub Actions workflows (querying the GitHub API for the latest release tags) is in `src/updee/workflows.py`.
+- Upgrading of Dockerfile base images (querying Docker Hub for the latest tags) is in `src/updee/docker.py`.
 - Unit tests are in `tests/unit`.
 - Shell tests are in `tests/shell`.
 - The version is derived from git tags via setuptools-scm - there is no version constant in the source code. `src/updee/version.py` reads it from the installed package metadata.
-- The `Dockerfile` builds an image for running updee in a repo / folder mounted at `/repo`. It must install every CLI that `src/updee/upgrade.py` shells out to (currently only uv) - update it when adding upgraders that need new tools.
+- The `Dockerfile` builds an image for running updee in a repo / folder mounted at `/repo`. It must install every CLI that `src/updee/upgrade.py` shells out to (currently uv, npm/npx, go, and cargo) - update it when adding upgraders that need new tools.
 
 ## Reference project
 

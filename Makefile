@@ -21,3 +21,5 @@ install:
 check: venv format lint
 	uv run pytest
 	uv run bash tests/run-shell-tests.sh
+	uv run coverage combine --append --keep out/shell-tests/.coverage
+	uv run coverage report

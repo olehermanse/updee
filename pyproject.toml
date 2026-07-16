@@ -31,6 +31,7 @@ testpaths = ["tests"]
 addopts = "--cov=upd --cov-report=term-missing"
 
 [tool.coverage.run]
+source = ["upd"]
 omit = ["src/upd/__main__.py"]
 
 [tool.coverage.report]

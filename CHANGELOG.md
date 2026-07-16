@@ -30,3 +30,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   subcommand output.
 - GitHub Actions workflow running `make check` on pushes and pull requests,
   on Linux and macOS, python 3.10 - 3.14.
+- GitHub Actions workflow publishing releases to PyPI
+  (when a GitHub release is published).

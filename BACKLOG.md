@@ -18,7 +18,6 @@ Things we're planning on adding, in no particular order:
 
 ## Project
 
-- Publish releases to PyPI on tags, using a GitHub Actions workflow.
 - Publish the docker image to ghcr.io on tags.
 - Tag v0.1.0, so versions from setuptools-scm look reasonable.
 - Add the npm CLI to the Dockerfile when the package.json / package-lock.json upgraders land.

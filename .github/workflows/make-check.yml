@@ -48,4 +48,4 @@ jobs:
       - name: See if there are changes
         run: |
           git diff --exit-code
-          git ls-files --other --directory --exclude-standard | sed q1
+          git ls-files --other --directory --exclude-standard

@@ -4,24 +4,30 @@ Things we're planning on adding, in no particular order:
 
 ## Upgraders
 
-- `package.json` / `package-lock.json` support, running the appropriate npm commands.
-- More file types, for example `go.mod`, `Cargo.toml`, GitHub Actions workflows, and Dockerfile base images.
+- `package-lock.json`: run `npm update`.
+- `package.json`: run `npx npm-check-updates -u` followed by `npm install`, to also bump the version ranges in the file.
+- `go.mod`: run `go get -u ./...` followed by `go mod tidy`.
+- `Cargo.toml` / `Cargo.lock`: run `cargo update`.
+- `uv.lock` in repos where we find it without pyproject.toml changes needed (currently we key on `pyproject.toml`; a `pyproject.toml` without uv, e.g. poetry, should be detected and skipped with a clear message).
+- GitHub Actions workflows (`.github/workflows/*.yml`): bump `uses:` action versions to the latest tag.
+- `Dockerfile`: bump the image tags in `FROM` lines to the latest version, e.g. `python:3.13-slim` -> `python:3.14-slim`.
 
 ## CLI
 
-- `--dry-run` flag to show what would be upgraded without changing anything.
-- Accepting paths as arguments, to upgrade only some files / directories, or a repo other than the current directory.
-- Summary output at the end: which files were upgraded, which were skipped, and which failed.
+- `--dry-run` flag: print the files that would be upgraded and the commands that would be run, without running them.
+- Positional `paths` arguments: `upd some/dir file.txt` to upgrade only the given files / directories, defaulting to the current directory.
+- `--only` flag to filter by file type: `upd --only pyproject.toml,requirements.txt`.
+- Summary table at the end of a run: one line per file with upgraded / skipped / failed.
+- `--quiet` flag: only print the summary, hide subcommand output.
 
 ## Automation
 
-- Git integration: create a branch and commit the upgrades.
-- Opening pull requests with the changes, like dependabot / renovate.
-- Running on a schedule against a list of repos.
+- `--commit` flag: commit each upgraded file separately, with a commit message describing the upgrade.
 
 ## Project
 
-- CI (GitHub Actions) running `make check` on pull requests.
-- Publishing releases to PyPI.
-- Publishing the docker image to a registry.
-- Tag a first release (v0.1.0), so versions from setuptools-scm look reasonable.
+- CI (GitHub Actions) running `make check` on pull requests and push, on Linux and macOS.
+- Publish releases to PyPI on tags, using a GitHub Actions workflow.
+- Publish the docker image to ghcr.io on tags.
+- Tag v0.1.0, so versions from setuptools-scm look reasonable.
+- Add the npm CLI to the Dockerfile when the package.json / package-lock.json upgraders land.

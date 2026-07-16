@@ -2,9 +2,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from upd.find import UPGRADE_FILE_NAMES, find_upgrade_files
-from upd.upgrade import upgrade_file
-from upd.version import version_string
+from updee.find import UPGRADE_FILE_NAMES, find_upgrade_files
+from updee.upgrade import upgrade_file
+from updee.version import version_string
 
 
 def _get_arg_parser():

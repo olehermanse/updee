@@ -3,7 +3,7 @@ requires = ["setuptools>=82.0.1", "setuptools-scm>=10.0.5"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "upd"
+name = "updee"
 dynamic = ["version"]
 description = "Stupidly simple repo updater"
 readme = "README.md"
@@ -17,7 +17,7 @@ classifiers = [
 ]
 
 [project.scripts]
-upd = "upd.main:main"
+updee = "updee.main:main"
 
 [tool.pyright]
 include = ["src"]
@@ -28,11 +28,11 @@ venv = ".venv"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=upd --cov-report=term-missing"
+addopts = "--cov=updee --cov-report=term-missing"
 
 [tool.coverage.run]
-source = ["upd"]
-omit = ["src/upd/__main__.py"]
+source = ["updee"]
+omit = ["src/updee/__main__.py"]
 
 [tool.coverage.report]
 exclude_also = ['if __name__ == "__main__":']

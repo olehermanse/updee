@@ -12,6 +12,6 @@ echo 'packaging>=20' > requirements.txt
 echo '{}' > package.json
 
 # One line per file, with its status:
-upd --dry-run | grep -q "Summary:"
-upd --dry-run | grep -E -q "requirements.txt +would upgrade"
-upd --dry-run | grep -E -q "package.json +skipped"
+updee --dry-run | grep -q "Summary:"
+updee --dry-run | grep -E -q "requirements.txt +would upgrade"
+updee --dry-run | grep -E -q "package.json +skipped"

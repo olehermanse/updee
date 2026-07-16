@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from upd.find import find_upgrade_files
+from updee.find import find_upgrade_files
 
 
 def test_finds_upgrade_files(tmp_path):

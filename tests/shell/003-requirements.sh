@@ -11,7 +11,7 @@ cd "$testdir"
 # Set up a "repo" with a loose requirements.txt:
 echo 'packaging>=20' > requirements.txt
 
-upd
+updee
 
 # The exact version is not deterministic, but it must now be pinned:
 grep -q '^packaging==' requirements.txt

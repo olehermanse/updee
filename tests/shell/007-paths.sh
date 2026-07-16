@@ -13,11 +13,11 @@ echo 'packaging>=20' > one/requirements.txt
 echo 'packaging>=20' > two/requirements.txt
 
 # Only the given directory is considered:
-upd --dry-run one | grep -q "one/requirements.txt"
-! upd --dry-run one | grep -q "two/requirements.txt"
+updee --dry-run one | grep -q "one/requirements.txt"
+! updee --dry-run one | grep -q "two/requirements.txt"
 
 # A file can be given directly:
-upd --dry-run two/requirements.txt | grep -q "two/requirements.txt"
+updee --dry-run two/requirements.txt | grep -q "two/requirements.txt"
 
 # Nonexistent paths are an error:
-! upd --dry-run three
+! updee --dry-run three

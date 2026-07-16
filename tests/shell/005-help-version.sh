@@ -8,11 +8,11 @@ rm -rf "$testdir"
 mkdir -p "$testdir"
 cd "$testdir"
 
-upd --help
-upd --help | grep -q "usage"
-upd --help | grep -q -- "--version"
+updee --help
+updee --help | grep -q "usage"
+updee --help | grep -q -- "--version"
 
 # The exact version is not deterministic, but it must be non-empty:
-upd --version
-test -n "$(upd --version)"
-test -n "$(upd -V)"
+updee --version
+test -n "$(updee --version)"
+test -n "$(updee -V)"

@@ -299,7 +299,7 @@ wheels = [
 ]
 
 [[package]]
-name = "upd"
+name = "updee"
 source = { editable = "." }
 
 [package.dev-dependencies]

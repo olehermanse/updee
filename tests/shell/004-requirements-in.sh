@@ -15,7 +15,7 @@ uv pip compile --exclude-newer 2023-01-01T00:00:00Z requirements.in -o requireme
 old="$(grep '^packaging==' requirements.txt)"
 test -n "$old"
 
-upd
+updee
 
 # The exact new version is not deterministic, but it must have changed:
 new="$(grep '^packaging==' requirements.txt)"

@@ -22,7 +22,7 @@ uv lock --exclude-newer 2023-01-01T00:00:00Z
 old="$(grep -A 1 '^name = "packaging"' uv.lock | grep '^version')"
 test -n "$old"
 
-upd
+updee
 
 # The exact new version is not deterministic, but it must have changed:
 new="$(grep -A 1 '^name = "packaging"' uv.lock | grep '^version')"

@@ -10,7 +10,7 @@ cd "$testdir"
 
 echo 'packaging>=20' > requirements.txt
 
-output="$(upd --quiet 2>&1)"
+output="$(updee --quiet 2>&1)"
 
 # Only the summary - no progress lines, no uv output:
 echo "$output" | grep -q "Summary:"

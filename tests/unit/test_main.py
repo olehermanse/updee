@@ -1,7 +1,7 @@
 import pytest
 
-import upd.upgrade
-from upd.main import main
+import updee.upgrade
+from updee.main import main
 
 
 def test_main_upgrades_found_files(tmp_path, capsys, monkeypatch):
@@ -18,7 +18,7 @@ def test_main_upgrades_found_files(tmp_path, capsys, monkeypatch):
 
         return Result()
 
-    monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
+    monkeypatch.setattr(updee.upgrade.subprocess, "run", fake_run)
 
     assert main([]) == 0
     assert len(calls) == 1
@@ -35,7 +35,7 @@ def test_main_propagates_upgrade_failure(tmp_path, capsys, monkeypatch):
 
         return Result()
 
-    monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
+    monkeypatch.setattr(updee.upgrade.subprocess, "run", fake_run)
 
     assert main([]) == 1
     output = capsys.readouterr().out
@@ -148,7 +148,7 @@ def test_main_dry_run(tmp_path, capsys, monkeypatch):
     def fake_run(command, cwd, stdout=None, stderr=None):
         raise AssertionError("subprocess.run should not be called in dry run")
 
-    monkeypatch.setattr(upd.upgrade.subprocess, "run", fake_run)
+    monkeypatch.setattr(updee.upgrade.subprocess, "run", fake_run)
 
     assert main(["--dry-run"]) == 0
     assert "would run" in capsys.readouterr().out

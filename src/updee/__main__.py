@@ -7,6 +7,6 @@ if __name__ == "__main__":
     abspath = os.path.abspath(above_dir)
     sys.path.insert(0, abspath)
 
-    from upd.main import main
+    from updee.main import main
 
     sys.exit(main())

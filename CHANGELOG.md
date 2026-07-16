@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `upd` CLI which finds dependency files (`package-lock.json`, `package.json`,
+- `updee` CLI which finds dependency files (`package-lock.json`, `package.json`,
   `requirements.txt`, `pyproject.toml`) in the current directory and upgrades
   the ones it has support for.
 - Upgrading of `pyproject.toml` projects, by running `uv lock --upgrade`.

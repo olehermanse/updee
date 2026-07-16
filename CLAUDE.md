@@ -1,6 +1,6 @@
 # upd information for LLMs
 
-`upd` is a stupidly simple repo updater - a CLI for keeping repos up to date, similar in spirit to updatecli, dependabot, and renovate.
+`updee` is a stupidly simple repo updater - a CLI for keeping repos up to date, similar in spirit to updatecli, dependabot, and renovate.
 
 ## Running python tools
 
@@ -11,7 +11,7 @@ Instead, run the appropriate uv command to ensure we're using the right python a
 To run the CLI:
 
 ```bash
-uv run upd
+uv run updee
 ```
 
 ## Running tests
@@ -32,7 +32,7 @@ uv run pytest
 ## Test suites
 
 - Unit tests in `tests/unit` test individual python functions.
-- Shell tests in `tests/shell` test the tool as a whole in an end-to-end fashion - each script sets up a fake "repo" under `out/shell-tests/` and checks that `upd` upgrades it. They require network access. Since new upstream releases happen at any time, they check that files were changed and remain valid, never exact post-upgrade versions.
+- Shell tests in `tests/shell` test the tool as a whole in an end-to-end fashion - each script sets up a fake "repo" under `out/shell-tests/` and checks that `updee` upgrades it. They require network access. Since new upstream releases happen at any time, they check that files were changed and remain valid, never exact post-upgrade versions.
 
 ## Fix the implementation
 
@@ -47,13 +47,13 @@ When making user-visible changes, add an entry under the `[Unreleased]` heading,
 
 ## Pointers for the source code
 
-- The CLI entry point (`main()`) is in `src/upd/main.py`.
-- Discovery of upgradeable files (package.json, pyproject.toml, etc.) is in `src/upd/find.py`.
-- Upgrading of the discovered files (running commands like `uv lock --upgrade`) is in `src/upd/upgrade.py`.
+- The CLI entry point (`main()`) is in `src/updee/main.py`.
+- Discovery of upgradeable files (package.json, pyproject.toml, etc.) is in `src/updee/find.py`.
+- Upgrading of the discovered files (running commands like `uv lock --upgrade`) is in `src/updee/upgrade.py`.
 - Unit tests are in `tests/unit`.
 - Shell tests are in `tests/shell`.
-- The version is derived from git tags via setuptools-scm - there is no version constant in the source code. `src/upd/version.py` reads it from the installed package metadata.
-- The `Dockerfile` builds an image for running upd in a repo / folder mounted at `/repo`. It must install every CLI that `src/upd/upgrade.py` shells out to (currently only uv) - update it when adding upgraders that need new tools.
+- The version is derived from git tags via setuptools-scm - there is no version constant in the source code. `src/updee/version.py` reads it from the installed package metadata.
+- The `Dockerfile` builds an image for running updee in a repo / folder mounted at `/repo`. It must install every CLI that `src/updee/upgrade.py` shells out to (currently only uv) - update it when adding upgraders that need new tools.
 
 ## Reference project
 

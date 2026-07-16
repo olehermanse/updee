@@ -2,10 +2,10 @@
 
 set -e
 
-echo "These tests expect upd to be installed globally or in venv"
+echo "These tests expect updee to be installed globally or in venv"
 
-echo "Looking for upd:"
-command -v upd
+echo "Looking for updee:"
+command -v updee
 
 echo "Check that test files are in expected location:"
 ls -al tests/shell/*.sh
@@ -13,18 +13,18 @@ ls -al tests/shell/*.sh
 rm -rf out/shell-tests
 mkdir -p out/shell-tests
 
-# Run upd through coverage.py so shell tests also produce test coverage.
+# Run updee through coverage.py so shell tests also produce test coverage.
 # Each invocation writes a separate data file (--parallel-mode), combined
 # into out/shell-tests/.coverage after the tests.
 root="$(pwd)"
 export COVERAGE_RCFILE="$root/pyproject.toml"
 export COVERAGE_FILE="$root/out/shell-tests/.coverage"
 mkdir -p out/shell-tests/bin
-cat > out/shell-tests/bin/upd <<'EOF'
+cat > out/shell-tests/bin/updee <<'EOF'
 #!/usr/bin/env bash
-exec coverage run --parallel-mode -m upd "$@"
+exec coverage run --parallel-mode -m updee "$@"
 EOF
-chmod +x out/shell-tests/bin/upd
+chmod +x out/shell-tests/bin/updee
 export PATH="$root/out/shell-tests/bin:$PATH"
 
 echo "Run shell tests:"

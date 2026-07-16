@@ -9,5 +9,5 @@ mkdir -p "$testdir"
 cd "$testdir"
 
 # In an empty "repo" there is nothing to upgrade - expect failure and a message
-! upd
-upd | grep -q "No files to upgrade found"
+! updee
+updee | grep -q "No files to upgrade found"

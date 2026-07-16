@@ -10,8 +10,8 @@ cd "$testdir"
 
 echo 'packaging>=20' > requirements.txt
 
-upd --dry-run
-upd --dry-run | grep -q "would run"
+updee --dry-run
+updee --dry-run | grep -q "would run"
 
 # The file must not have been changed:
 grep -q '^packaging>=20$' requirements.txt

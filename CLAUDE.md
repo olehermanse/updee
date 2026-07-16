@@ -50,6 +50,7 @@ When making user-visible changes, add an entry under the `[Unreleased]` heading,
 - The CLI entry point (`main()`) is in `src/updee/main.py`.
 - Discovery of upgradeable files (package.json, pyproject.toml, etc.) is in `src/updee/find.py`.
 - Upgrading of the discovered files (running commands like `uv lock --upgrade`) is in `src/updee/upgrade.py`.
+- Upgrading of GitHub Actions workflows (querying the GitHub API for the latest release tags) is in `src/updee/workflows.py`.
 - Unit tests are in `tests/unit`.
 - Shell tests are in `tests/shell`.
 - The version is derived from git tags via setuptools-scm - there is no version constant in the source code. `src/updee/version.py` reads it from the installed package metadata.
@@ -59,3 +60,12 @@ When making user-visible changes, add an entry under the `[Unreleased]` heading,
 
 Use CFEngine CLI as a reference for how to do something.
 It is cloned in tmp/cfengine-cli.
+
+## Committing
+
+In general you should commit your work unless told otherwise.
+AI-generated commits should be clearly labelled at the end of the commit message:
+
+```
+Co-authored-by: Claude Fable 5 <noreply@anthropic.com>
+```

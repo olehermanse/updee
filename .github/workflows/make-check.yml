@@ -40,6 +40,10 @@ jobs:
         run: |
           echo "${{ matrix.python-version }}" > .python-version
       - name: Run make check
+        env:
+          # The GitHub workflow shell test queries the GitHub API, which is
+          # heavily rate limited without a token:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           make check
       - name: Reset python version file

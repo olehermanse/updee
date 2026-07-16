@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Upgrading of GitHub Actions workflows (`.github/workflows/*.yml`), replacing
+  version tags like `actions/checkout@v4` with the latest release tag from the
+  GitHub API. The pinned precision is kept (`v4` becomes `v5`, `v4.1.0` becomes
+  `v5.0.2`), and SHA / branch pins are left alone. Requests are authenticated
+  with the `GITHUB_TOKEN` environment variable, if set.
+
 ## [0.0.1] - 2026-07-16
 
 ### Added

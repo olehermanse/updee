@@ -37,6 +37,19 @@ def test_skips_hidden_and_vendored_directories(tmp_path):
     assert find_upgrade_files(tmp_path) == []
 
 
+def test_finds_github_workflows(tmp_path):
+    workflows = tmp_path / ".github" / "workflows"
+    workflows.mkdir(parents=True)
+    (workflows / "ci.yml").touch()
+    (workflows / "publish.yaml").touch()
+    (workflows / "README.md").touch()
+    (tmp_path / ".github" / "dependabot.yml").touch()
+    (tmp_path / "other.yml").touch()
+
+    found = find_upgrade_files(tmp_path)
+    assert found == [workflows / "ci.yml", workflows / "publish.yaml"]
+
+
 def test_empty_directory(tmp_path):
     assert find_upgrade_files(tmp_path) == []
 

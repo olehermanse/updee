@@ -1,6 +1,9 @@
 import subprocess
 from pathlib import Path
 
+from updee.find import is_github_workflow
+from updee.workflows import upgrade_workflow
+
 
 def plan_pyproject(path: Path) -> list[str]:
     return ["uv", "lock", "--upgrade"]
@@ -25,6 +28,8 @@ PLANNERS = {
 def upgrade_file(path: Path, dry_run: bool = False, quiet: bool = False) -> str:
     """Upgrade path, returning a status for the summary:
     upgraded / skipped / failed / would upgrade"""
+    if is_github_workflow(path):
+        return upgrade_workflow(path, dry_run=dry_run, quiet=quiet)
     planner = PLANNERS.get(path.name)
     if planner is None:
         if not quiet:

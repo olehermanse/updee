@@ -40,6 +40,11 @@ In general, when the prompter asks you to fix the implementation, this means tha
 Typically you should not touch the tests in this case, unless there is something obviously wrong in them, like a typo.
 The first step to identify what is necessary should be to run the tests and see which ones are failing.
 
+## Changelog
+
+`CHANGELOG.md` follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
+When making user-visible changes, add an entry under the `[Unreleased]` heading, in the appropriate subsection (`Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`).
+
 ## Pointers for the source code
 
 - The CLI entry point (`main()`) is in `src/upd/main.py`.
